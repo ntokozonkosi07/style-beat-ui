@@ -1,0 +1,50 @@
+.loginComponent{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto 50px;
+    grid-gap: 20px;
+    grid-template-areas: 
+        "login"
+        "sign_up";
+    padding: 0 20px;
+    min-height: 100%;
+
+    .login{
+        grid-area: login;
+        display: grid;
+        grid-column: 1 / -1;
+        align-content: center;
+
+        .forgot__password {
+            display: grid;
+            grid-template-columns:24px auto;
+            grid-template-areas: "forgot__password_icon forgot__password__link";
+            padding: 10px 0 0 0;
+
+            .forgot__password_icon{
+                grid-area: forgot__password_icon;
+                background: url(./../../../../resources/icons/alert-circle.svg);
+                background-repeat: no-repeat;
+                background-size: contain;
+                grid-column: 1;
+            }
+
+            .forgot__password__link{
+                grid-area: forgot__password__link;
+                grid-column: 2;
+            }
+        }
+
+        .forgot__password__link {
+            grid-area: forgot__password__link;
+        }
+        
+    }
+    .sign_up {
+        grid-area: sign_up;
+        display: grid;
+        grid-column: 1 / -1;
+        grid-column: 2;
+        justify-content: center;
+    }
+}

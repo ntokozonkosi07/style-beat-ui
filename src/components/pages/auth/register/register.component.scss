@@ -1,0 +1,27 @@
+.registerComponent {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 50px;
+    grid-gap: 20px;
+    grid-template-areas: 
+        "register_container"
+        "login_link";
+    min-height: 100%;
+    padding: 0 20px;
+
+    .register_container {
+        grid-area: register_container;
+        display: grid;
+        grid-column: 1 / -1;
+        min-height: 100%;
+        align-content: center;
+    }
+    
+    .login_link {
+        grid-area: login_link;
+        min-height: 100%;
+        grid-column: 2;
+        display: grid;
+        justify-content: center;
+    }
+}

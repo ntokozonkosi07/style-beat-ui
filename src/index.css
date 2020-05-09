@@ -1,13 +1,67 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,700&display=swap');
+
+:root {
+    --accent: #007BFF;
+    --light: #F4F3EF;
+    --light-gray: #C7C7C7;
+    --dark: #000;
+    --overlay: rgba(23,25,29,.2);
+    --ease: all 0.3s ease 0s;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html, #root {
+  height: 100%;
 }
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+body{
+  height: 100%;
+  background-color: var(--light);
+}
+
+p, span, h1, a {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--light-gray);
+}
+
+/* buttons */
+button {
+  height: 46px;
+  border-radius: 5px;
+  background-color: var(--accent);
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.25);
+  color: var(--light);
+  margin-top: 10px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  transition: var(--ease);
+}
+
+button:hover{
+  transform: scale(1.02);
+}
+
+
+/* inputs - textbox */
+input {
+    width: 100%;
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    height: 43px;
+    margin-top: 10px;
+    text-indent: 5px;
+}
+
