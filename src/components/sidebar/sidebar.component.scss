@@ -1,0 +1,81 @@
+.sidebarComponent{
+    background: white;
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 20px auto;
+    grid-template-rows: 80px auto;
+    grid-template-areas: 
+    ". header"
+    ". menus";
+
+    
+    .header {
+        grid-area: header;
+        display: grid;
+        grid-template-columns: 24px auto;
+        grid-column-gap: 20px;
+        grid-template-areas: 
+            "icon logo-icon";
+        cursor: pointer;
+
+        .icon{
+            grid-area: icon;
+            background: url(./../../resources/icons/menu.svg);
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+
+        .logo-icon{
+            grid-area: logo-icon;
+            background: url(./../../resources/icons/logo.png);
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+    }
+
+    .menus {
+        display: grid;
+        grid-area: menus;
+        padding: 20px 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(auto-fit, 50px);
+
+        .menu {
+            display: grid;
+            grid-template-columns: 24px auto;
+            grid-gap: 20px;
+            grid-template-areas: "menu-icon menu-text";
+            cursor: pointer;
+
+            &:hover{
+                .menu-icon,
+                .menu-text{
+                    color: var(--dark-gray)
+                }   
+            }
+
+            &.active {
+                .menu-icon,
+                .menu-text{
+                    color: var(--orange)
+                }     
+            }
+
+            .menu-icon {
+                grid-area: menu-icon;
+                display: grid;
+                align-self: center;
+            }
+
+            .menu-text {
+                grid-area: menu-text;
+                display: grid;
+                align-content: center;
+                font-size: 24px;
+                color: (--gray)
+            }
+
+            
+        }
+    }
+}

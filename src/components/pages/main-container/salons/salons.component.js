@@ -5,7 +5,6 @@ import './salons.component.scss';
 
 class salonsComponent extends Component {
     render() {
-        debugger;
         return <div className="salonsComponent"><h1>Conglomorate</h1></div>;
     }
 }

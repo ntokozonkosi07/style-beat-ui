@@ -4,7 +4,9 @@
     --accent: #007BFF;
     --light: #F4F3EF;
     --light-gray: #C7C7C7;
-    --dark: #000;
+    --gray: #a9a9a9;
+    --dark-gray: #4b4b4b;
+    --orange: #EB5E28;
     --overlay: rgba(23,25,29,.2);
     --ease: all 0.3s ease 0s;
 }

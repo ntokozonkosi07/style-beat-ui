@@ -4,7 +4,6 @@ import './auth.component.css';
 
 const AuthComponent = (WrappedComponent) => {
     return class extends Component {
-        debugger;
         render() {
             return <div className="container">
 
