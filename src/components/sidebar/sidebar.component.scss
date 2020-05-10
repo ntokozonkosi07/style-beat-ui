@@ -78,4 +78,37 @@
             
         }
     }
+
+    &-toggled {
+        @extend .sidebarComponent;
+        grid-template-columns: 20px auto 20px;
+        grid-template-areas: 
+            ". header ."
+            ". menus .";
+
+        
+        .header {
+            grid-template-columns: 24px;
+            grid-template-areas: 
+                "icon";
+            justify-content: center;
+
+            .logo-icon{
+                display: none;
+            }
+        }
+
+        .menus {
+
+            .menu {
+                grid-template-columns: 24px;
+                grid-template-areas: "menu-icon";
+                justify-content: center;
+
+                .menu-text {
+                    display: none;
+                }            
+            }
+        }
+    }
 }

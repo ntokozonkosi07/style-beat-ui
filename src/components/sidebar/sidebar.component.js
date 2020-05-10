@@ -50,9 +50,9 @@ export class SidebarComponent extends Component {
 
     render(){
 
-        return <div className="sidebarComponent">
+        return <div className={`sidebarComponent${this.props.isSidebarCollapsed? '-toggled': ''}`}>
             <div className="header" >
-                <span className="icon" onClick={()=> this.props.sidebarToggle(!this.state.sidebarToggle)}></span>
+                <span className="icon" onClick={()=> this.props.sidebarToggle(!this.props.isSidebarCollapsed)}></span>
                 <span className="logo-icon"></span>
             </div>
             <div className="menus">

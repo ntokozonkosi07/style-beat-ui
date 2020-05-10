@@ -4,6 +4,7 @@
     grid-template-columns: repeat(12,1fr);
     grid-template-areas: "main-sidebar main-content";
     min-height: 100%;
+    transition: grid-template-columns 0.2s ease 0s;
 
     .sidebar{
         grid-area: main-sidebar;
@@ -14,5 +15,17 @@
         grid-area: main-content;
         grid-column: 3 / -1;
         min-height: 100%;
-    }   
+    }
+
+    &-toggled {
+        @extend .main-container;
+        grid-template-columns: 64px repeat(12,1fr);
+
+        .sidebar{
+            grid-column: 1 ;
+        }
+        .content{
+            grid-column: 2 / -1;
+        }  
+    }
 }

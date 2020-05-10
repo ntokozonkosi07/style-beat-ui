@@ -9,16 +9,24 @@ const MainContainer = (WrappedComponent) => {
 
         constructor(){
             super();
+            this.state = {
+                isSidebarCollapsed: false
+            }
         }
 
         sidebarToggle(event){
             debugger;
+            this.setState({
+                ...this.state,
+                isSidebarCollapsed: event
+            });
         }
 
         render(){
-            return <div className="main-container">
+            const { isSidebarCollapsed } = this.state; 
+            return <div className={`main-container${isSidebarCollapsed ? '-toggled': ''}`}>
                 <div className="sidebar">
-                    <SidebarComponent sidebarToggle={(e)=> this.sidebarToggle(e)} {...this.props} />
+                    <SidebarComponent sidebarToggle={(e)=> this.sidebarToggle(e)} { ...this.state } {...this.props} />
                 </div>
                 <div className="content">
                     <WrappedComponent {...this.props} />
