@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { AuthComponent } from './..';
 import { auth as authService } from './../../../../services/Auth.service';
+import { emailRegex, passwordRegex } from './../../../../constants';
 import './register.component.scss'
 
 class registerComponent extends Component {
@@ -20,30 +21,45 @@ class registerComponent extends Component {
             [name]: { value, errors: [] }
         }
 
+        attribute[name].errors = [];
         switch (name) {
             case 'name':
-                if (value.length == 0) {
-                    attribute[name].errors.push(`Name is required!`);
+                if (value.length === 0) {
+                    attribute[name].errors.push(`Name is required!`); break;
                 }
                 break;
             case 'lastName':
-                if (value.length == 0) {
-                    attribute[name].errors.push(`Last name is required!`);
+                if (value.length === 0) {
+                    attribute[name].errors.push(`Last name is required!`); break;
                 }
                 break;
             case 'email':
-                if (value.length == 0) {
-                    attribute[name].errors.push(`Email is required!`);
+                if (value.length === 0) {
+                    attribute[name].errors.push(`Email is required!`); break;
+                }
+                if(!emailRegex.test(value)){
+                    attribute[name].errors.push(`Email is invalid!`); break;
                 }
                 break;
             case 'password':
-                if (value.length == 0) {
-                    attribute[name].errors.push(`Password is required!`);
+                if (value.length === 0) {
+                    attribute[name].errors.push(`Password is required!`); break;
+                }
+                if(!passwordRegex.test(value)){
+                    attribute[name].errors.push(`Password must contain at least 1 lowercase alphabetical character`);
+                    attribute[name].errors.push(`Password must contain at least 1 uppercase alphabetical character`); 
+                    attribute[name].errors.push(`Password must contain at least 1 numeric character`); 
+                    attribute[name].errors.push(`Password must contain at least 1 special character`); 
+                    attribute[name].errors.push(`Password must must be 8 characters or longer`); 
+                    break;
                 }
                 break;
             case 'confirmPassword':
-                if (value.length == 0) {
-                    attribute[name].errors.push(`Confirm password is required!`);
+                if (value.length === 0) {
+                    attribute[name].errors.push(`Confirm password is required!`); break;
+                }
+                if(this.state.user.password.value !== value){
+                    attribute[name].errors.push(`Passwords do not match!`); break;
                 }
                 break;
             default: break;
@@ -93,7 +109,7 @@ class registerComponent extends Component {
                 </div>
                 <div>
                     <div>
-                        <input placeholder="Please enter email" name="email" className={user.email && user.email.errors.length > 0 ? 'error': ''} onChange={this.handleChange} />
+                        <input placeholder="Please enter email" name="email" email="true" className={user.email && user.email.errors.length > 0 ? 'error': ''} onChange={this.handleChange} />
                     </div>
                     <div>
                         {user.email && user.email.errors.map(error => <small>{error}</small>)}
