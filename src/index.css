@@ -9,6 +9,8 @@
     --orange: #EB5E28;
     --overlay: rgba(23,25,29,.2);
     --ease: all 0.3s ease 0s;
+    --error: #FB3640;
+    --error-background:#f7b0ac2b;   
 }
 
 html, #root {
@@ -27,7 +29,7 @@ body{
   background-color: var(--light);
 }
 
-p, span, h1, a {
+p, span, h1, a, small {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
 }

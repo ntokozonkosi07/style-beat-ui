@@ -24,4 +24,14 @@
         display: grid;
         justify-content: center;
     }
+
+    small {
+        display: block;
+        color: var(--error);
+    }
+
+    .error {
+        border: 1px solid var(--error);
+        background-color: var(--error-background);
+    }
 }

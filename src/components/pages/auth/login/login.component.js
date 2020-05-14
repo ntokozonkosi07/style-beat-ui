@@ -5,6 +5,7 @@ import { AuthComponent } from './..';
 import './login.component.scss';
 
 class loginComponent extends Component {
+    
     render() {
         return <div className="loginComponent">
             <div className="login">
