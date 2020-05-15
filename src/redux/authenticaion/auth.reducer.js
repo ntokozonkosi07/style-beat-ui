@@ -1,9 +1,9 @@
 
 import { SET_AUTH_TOKEN } from './auth.action';
 
-const getAuthToken = (state = '', action) => {
+const authToken = (state = '', action) => {
     const { type } = action;
-
+    
     switch(type){
         case SET_AUTH_TOKEN:
             return action.token;
@@ -12,4 +12,4 @@ const getAuthToken = (state = '', action) => {
     }
 }
 
-export default getAuthToken;
+export default authToken;

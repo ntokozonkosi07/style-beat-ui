@@ -76,7 +76,6 @@ class registerComponent extends Component {
     }
 
     handleChange = (e) => {
-        debugger;
         const { name, value } = e.target;
         
         const property = this.validateSchema(name, value);
@@ -186,6 +185,7 @@ class registerComponent extends Component {
                 </div>
                 <div>
                     <PasswordInput 
+                        placeholder="Please confirm password"
                         className={user.confirmPassword && user.confirmPassword.errors.length > 0 ? 'error': ''}
                         onPasswordChange={value => this.handleChange({target: {name:'confirmPassword',value}})}/>
                     <div>

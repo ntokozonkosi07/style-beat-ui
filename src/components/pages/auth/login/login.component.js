@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { AuthComponent } from './..';
 import { PasswordInput } from './../../../password-input/password.input';
+import { auth } from './../../../../services/Auth.service';
+import { setAuthToken } from './../../../../redux';
 import './login.component.scss';
 
 class loginComponent extends Component {
@@ -13,7 +16,24 @@ class loginComponent extends Component {
     }
 
     onAttributeChanged(prop, value){
-        this.setState({ [prop]: value })
+        this.setState({ [prop]: value });
+    }
+
+    login = e => {
+        const { 
+            state: { email, password },
+            props: { setAuthToken } 
+        } = this;
+
+        auth.authenticate(email, password)
+            .then(({headers}) => {
+                debugger;
+                const token = headers['authorization'];
+                setAuthToken(token);
+                this.props.history.push(`/`)
+            }, error => {
+                debugger;
+            })
     }
     
     render() {
@@ -31,7 +51,7 @@ class loginComponent extends Component {
                     <Link className="forgot__password__link">Forgot password?</Link>
                 </div>
                 <div>
-                    <button>Login</button>
+                    <button onClick={this.login}>Login</button>
                 </div>
             </div>
             <div className="sign_up">
@@ -42,6 +62,6 @@ class loginComponent extends Component {
     }
 }
 
-const LoginComponent = AuthComponent(loginComponent); 
+const LoginComponent = connect(null, { setAuthToken })(AuthComponent(loginComponent)); 
 
 export { LoginComponent };
