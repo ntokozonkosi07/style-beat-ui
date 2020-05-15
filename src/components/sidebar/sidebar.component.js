@@ -41,7 +41,6 @@ export class SidebarComponent extends Component {
     }
 
     menuClick(menu){
-        debugger;
         this.setState({
             ...this.state,
             menus: this.state.menus.map(m => ({ ...m, active: m.label === menu.label }))

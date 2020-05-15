@@ -15,7 +15,6 @@ const MainContainer = (WrappedComponent) => {
         }
 
         sidebarToggle(event){
-            debugger;
             this.setState({
                 ...this.state,
                 isSidebarCollapsed: event

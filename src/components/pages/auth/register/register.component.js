@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import FeatherIcon from 'feather-icons-react';
 
 import { AuthComponent } from './..';
 import { auth as authService } from './../../../../services/Auth.service';
@@ -11,21 +12,26 @@ class registerComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {}
+            isLoading: false,
+            user: {
+                name: { value: '', errors: [] },
+                lastName: { value: '', errors: [] },
+                email: { value: '', errors: [] },
+                password: { value: '', isPassVisible: false, errors: [] },
+                confirmPassword: { value: '', isPassVisible: false, errors: [] }
+            }
         }
     }
 
-    handleChange = (e) => {
-        const { name, value } = e.target;
+    validateSchema(name, value){
         let attribute = {
             [name]: { value, errors: [] }
         }
 
-        attribute[name].errors = [];
         switch (name) {
             case 'name':
                 if (value.length === 0) {
-                    attribute[name].errors.push(`Name is required!`); break;
+                    attribute[name].errors.push(`Name is required!`);
                 }
                 break;
             case 'lastName':
@@ -65,32 +71,85 @@ class registerComponent extends Component {
             default: break;
         }
 
+        return attribute;
+    }
+
+    handleChange = (e) => {
+        const { name, value } = e.target;
+        
+        const property = this.validateSchema(name, value);
+        
+
         this.setState({
             ...this.state,
             user: {
                 ...this.state.user,
-                ...attribute
+                ...property
             }
         });
-        debugger;
+    }
+
+    togglePasswordVisibility = (prop, value) => {
+        this.setState({...this.state,user: {
+            ...{
+                ...this.state.user,
+                [prop]: {
+                    ...this.state.user[prop],
+                    isPassVisible: value
+                }
+            }
+        }})
     }
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({...this.state,isLoading:true});
+        const { user } = this.state;
+
+        const payload = {
+            name: user.name.value,
+            lastName: user.lastName.value,
+            email: user.email.value,
+            password: user.password.value
+        }
         debugger;
-        // authService.registerUser(user).then(res => {
-        //     debugger;
-        // }, error => {
-        //     debugger;
-        // })
+        authService.registerUser(payload)
+        .then(res => {
+            debugger;
+            this.setState({...this.state, isSuccess: true})
+        }, error => {
+            debugger;
+            const {name, lastName, email, password, confirmPassword} = this.state.user;
+                this.setState({
+                    ...this.state, user: {
+                        name: { ...name, value: '' },
+                        lastName: { ...lastName, value: '' },
+                        email: { ...email, value: '' },
+                        password: { ...password, value: '' },
+                        confirmPassword: { ...confirmPassword, value: '' }
+                    }, isSuccess: false
+                });
+        })
+        .finally(() => this.setState({...this.state,isLoading:false}))
     }
 
 
     render() {
         const { user } = this.state;
 
+        const resultsMessage = (msg, isSuccess=false) => {
+            return <div className={`notification ${ isSuccess ? 'success': 'error'}`}>
+                <p>{msg}</p>
+            </div>
+        }
+        
         return <div className="registerComponent">
-            <form onSubmit={this.handleSubmit} noValidate className="register_container">
+            
+            <form onSubmit={this.handleSubmit.bind(this)} noValidate className="register_container">
+                {
+                    this.state.isSuccess &&
+                    resultsMessage(this.state.isSuccess ? "User created successfully.": "User cannot be created!",this.state.isSuccess)
+                }
                 <div>
                     <div>
                         <input placeholder="Please enter name." name="name" className={user.name && user.name.errors.length > 0 ? 'error': ''} onChange={this.handleChange} />
@@ -116,22 +175,37 @@ class registerComponent extends Component {
                     </div>
                 </div>
                 <div>
-                    <div>
-                        <input type="password" placeholder="Please enter password." className={user.password && user.password.errors.length > 0 ? 'error': ''}  name="password" onChange={this.handleChange} />
+                    <div className={user.password && user.password.errors.length > 0 ? "password error": "password"} >
+                        <div>
+                            <input 
+                                type={user.password.isPassVisible ? 'text': 'password'} 
+                                placeholder="Please enter password." 
+                                className="password-input"
+                                name="password"
+                                onChange={this.handleChange} />
+                        </div>
+                        <div className="icon" 
+                            onClick={e => this.togglePasswordVisibility('password',!this.state.user.password.isPassVisible)}>
+                            <FeatherIcon icon={user.password.isPassVisible ? 'eye': 'eye-off'} />
+                        </div>
                     </div>
                     <div>
                         {user.password && user.password.errors.map(error => <small>{error}</small>)}
                     </div>
                 </div>
                 <div>
-                    <div>
-                        <input type="password" placeholder="Please re-enter password." className={user.confirmPassword && user.confirmPassword.errors.length > 0 ? 'error': ''}  name="confirmPassword" onChange={this.handleChange} />
+                    <div className={user.confirmPassword && user.confirmPassword.errors.length > 0 ? 'password error': 'password'}>
+                        <div>
+                            <input type={user.confirmPassword.isPassVisible ? 'text': 'password'} placeholder="Please re-enter password." className="password-input"  name="confirmPassword" onChange={this.handleChange} />
+                        </div>
+                        <div className="icon" onClick={e => this.togglePasswordVisibility('confirmPassword', !this.state.user.confirmPassword.isPassVisible)}>
+                            <FeatherIcon icon={user.confirmPassword.isPassVisible ? 'eye': 'eye-off'} />
+                        </div>
                     </div>
                     <div>
                         {user.confirmPassword && user.confirmPassword.errors.map(error => <small>{error}</small>)}
                     </div>
-                </div>
-                
+                </div>              
                 <button type="submit">Register</button>
             </form>
             <div className="login_link">

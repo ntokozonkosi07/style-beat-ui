@@ -3,11 +3,10 @@ import axios from "axios";
 export const AUTH_KEY = "AUTH_KEY"; 
 class Auth {
   isAuthenticated() {
-    return true;
+    return false;
   }
 
   registerUser(user) {
-    debugger;
     return axios.post('/style-beat/api/v1/users', user);
   }
 }
