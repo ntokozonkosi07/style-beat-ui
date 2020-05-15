@@ -5,6 +5,7 @@ import FeatherIcon from 'feather-icons-react';
 import { AuthComponent } from './..';
 import { auth as authService } from './../../../../services/Auth.service';
 import { emailRegex, passwordRegex } from './../../../../constants';
+import { PasswordInput } from './../../../../components/password-input'
 import './register.component.scss'
 
 class registerComponent extends Component {
@@ -75,6 +76,7 @@ class registerComponent extends Component {
     }
 
     handleChange = (e) => {
+        debugger;
         const { name, value } = e.target;
         
         const property = this.validateSchema(name, value);
@@ -115,7 +117,8 @@ class registerComponent extends Component {
         
         authService.registerUser(payload)
         .then(res => {
-            this.setState({...this.state, isSuccess: true});
+            // no point of the line of code below
+            // this.setState({...this.state, isSuccess: true});
             this.props.history.push(`/`)
         }, error => {
             const {name, lastName, email, password, confirmPassword} = this.state.user;
@@ -174,33 +177,17 @@ class registerComponent extends Component {
                     </div>
                 </div>
                 <div>
-                    <div className={user.password && user.password.errors.length > 0 ? "password error": "password"} >
-                        <div>
-                            <input 
-                                type={user.password.isPassVisible ? 'text': 'password'} 
-                                placeholder="Please enter password." 
-                                className="password-input"
-                                name="password"
-                                onChange={this.handleChange} />
-                        </div>
-                        <div className="icon" 
-                            onClick={e => this.togglePasswordVisibility('password',!this.state.user.password.isPassVisible)}>
-                            <FeatherIcon icon={user.password.isPassVisible ? 'eye': 'eye-off'} />
-                        </div>
-                    </div>
+                    <PasswordInput 
+                        className={user.password && user.password.errors.length > 0 ? 'error': ''}
+                        onPasswordChange={value =>this.handleChange({target:{name:'password',value}})}/>
                     <div>
                         {user.password && user.password.errors.map(error => <small>{error}</small>)}
                     </div>
                 </div>
                 <div>
-                    <div className={user.confirmPassword && user.confirmPassword.errors.length > 0 ? 'password error': 'password'}>
-                        <div>
-                            <input type={user.confirmPassword.isPassVisible ? 'text': 'password'} placeholder="Please re-enter password." className="password-input"  name="confirmPassword" onChange={this.handleChange} />
-                        </div>
-                        <div className="icon" onClick={e => this.togglePasswordVisibility('confirmPassword', !this.state.user.confirmPassword.isPassVisible)}>
-                            <FeatherIcon icon={user.confirmPassword.isPassVisible ? 'eye': 'eye-off'} />
-                        </div>
-                    </div>
+                    <PasswordInput 
+                        className={user.confirmPassword && user.confirmPassword.errors.length > 0 ? 'error': ''}
+                        onPasswordChange={value => this.handleChange({target: {name:'confirmPassword',value}})}/>
                     <div>
                         {user.confirmPassword && user.confirmPassword.errors.map(error => <small>{error}</small>)}
                     </div>
