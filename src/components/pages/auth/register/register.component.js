@@ -112,14 +112,12 @@ class registerComponent extends Component {
             email: user.email.value,
             password: user.password.value
         }
-        debugger;
+        
         authService.registerUser(payload)
         .then(res => {
-            debugger;
             this.setState({...this.state, isSuccess: true});
             this.props.history.push(`/`)
         }, error => {
-            debugger;
             const {name, lastName, email, password, confirmPassword} = this.state.user;
                 this.setState({
                     ...this.state, user: {
