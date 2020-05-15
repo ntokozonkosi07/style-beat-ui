@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-
-import { auth } from './../services/Auth.service';
+import { connect } from 'react-redux';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return (
@@ -9,7 +8,8 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={
         (props) => {
-          if (auth.isAuthenticated()) {
+          debugger;
+          if (props.getAuthToken) {
             return <Component {...props} />
           } else {
             return <Redirect to={
@@ -26,4 +26,6 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   );
 }
 
-export default ProtectedRoute;
+const mapStateToProps = ({ getAuthToken }) => ({ getAuthToken });
+
+export default connect(mapStateToProps, null)(ProtectedRoute);

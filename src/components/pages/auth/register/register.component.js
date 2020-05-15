@@ -116,7 +116,8 @@ class registerComponent extends Component {
         authService.registerUser(payload)
         .then(res => {
             debugger;
-            this.setState({...this.state, isSuccess: true})
+            this.setState({...this.state, isSuccess: true});
+            this.props.history.push(`/`)
         }, error => {
             debugger;
             const {name, lastName, email, password, confirmPassword} = this.state.user;
