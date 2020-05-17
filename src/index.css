@@ -82,3 +82,9 @@ input {
   background-color: var(--success-background) !important;
   outline: none;
 }
+
+small {
+  display: block;
+  color: var(--error);
+  animation: expand .2s ease-in-out;
+}
