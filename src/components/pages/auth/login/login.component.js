@@ -11,8 +11,10 @@ import './login.component.scss';
 class loginComponent extends Component {
 
     state = {
-        email: { value: '', errors: [] },
-        password: { value: '', errors: [] }
+        credentials: {
+            email: { value: '', errors: [] },
+            password: { value: '', errors: [] }
+        }
     }
 
     validateProperties(prop, value){
@@ -52,39 +54,56 @@ class loginComponent extends Component {
 
     onAttributeChanged(prop, value){
         const propertyValue = this.validateProperties(prop, value);
-        debugger;
-        this.setState({ [prop]: { ...propertyValue[prop] } });
+        this.setState({
+            credentials: {
+                ...this.state.credentials,
+                [prop]: {
+                    ...propertyValue[prop]
+                }
+            }
+        });
     }
 
     login = e => {
         const { 
-            state: { email, password },
+            state: { credentials: { email, password } },
             props: { setAuthToken } 
         } = this;
 
-        const { valid, credentials } = this.validateForm({ email, password });
-
+        const { valid, credentials: _credentials } = this.validateForm({ email, password });
+        
         if(!valid){
-            this.setState({ ...credentials });
+            this.setState({credentials: { ..._credentials }});
             return;
         }
 
         auth.authenticate(email.value, password.value)
             .then(({headers}) => {
-                debugger;
                 const token = headers['authorization'];
                 setAuthToken(token);
-                this.props.history.push(`/`)
+                this.props.history.push(`/`);
             }, error => {
                 debugger;
+                this.setState({ isAuthFailed: true });
             })
     }
     
     render() {
         const renderValidationError = error => <small>{error}</small>;
-        const { email, password } = this.state;
+        const resultsMessage = (msg, isSuccess=false) => {
+            return <div className={`notification error`}>
+                <p>{msg}</p>
+            </div>
+        }
+
+        const { isAuthFailed, credentials: { email, password } } = this.state;
+
+        debugger;
         return <div className="loginComponent">
             <div className="login">
+                {
+                    isAuthFailed && (resultsMessage("Invalid username or password!"))
+                }
                 <div>
                     <div>
                         <input 

@@ -15,6 +15,14 @@
         grid-column: 1 / -1;
         align-content: center;
 
+        .notification{
+            display: grid;
+            justify-content: center;
+            align-content: center;
+            height: 80px;
+            border-radius: 5px;
+        }
+        
         .forgot__password {
             display: grid;
             grid-template-columns:24px auto;
