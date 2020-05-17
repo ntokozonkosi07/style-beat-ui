@@ -1,7 +1,7 @@
 
 import { SET_AUTH_TOKEN } from './auth.action';
 
-const authToken = (state = '', action) => {
+const authToken = (state = localStorage.getItem('token'), action) => {
     const { type } = action;
     
     switch(type){

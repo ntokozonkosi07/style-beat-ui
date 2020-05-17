@@ -80,10 +80,10 @@ class loginComponent extends Component {
         auth.authenticate(email.value, password.value)
             .then(({headers}) => {
                 const token = headers['authorization'];
+                localStorage.setItem('token', token);
                 setAuthToken(token);
                 this.props.history.push(`/`);
             }, error => {
-                debugger;
                 this.setState({ isAuthFailed: true });
             })
     }
@@ -98,7 +98,6 @@ class loginComponent extends Component {
 
         const { isAuthFailed, credentials: { email, password } } = this.state;
 
-        debugger;
         return <div className="loginComponent">
             <div className="login">
                 {
@@ -125,7 +124,7 @@ class loginComponent extends Component {
                 </div>
                 <div className="forgot__password">
                     <span className="forgot__password_icon"></span>
-                    <Link className="forgot__password__link">Forgot password?</Link>
+                    <Link className="forgot__password__link" to="/">Forgot password?</Link>
                 </div>
                 <div>
                     <button onClick={this.login}>Login</button>
