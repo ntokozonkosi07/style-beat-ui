@@ -80,7 +80,6 @@ class registerComponent extends Component {
         
         const property = this.validateSchema(name, value);
         
-
         this.setState({
             ...this.state,
             user: {
@@ -89,23 +88,29 @@ class registerComponent extends Component {
             }
         });
     }
-
-    togglePasswordVisibility = (prop, value) => {
-        this.setState({...this.state,user: {
-            ...{
-                ...this.state.user,
-                [prop]: {
-                    ...this.state.user[prop],
-                    isPassVisible: value
-                }
-            }
-        }})
+    
+    validateForm = (user) => {
+        let valid = true;
+        let _user = {...user};
+        Object.keys(user).forEach(key => {
+            const prop = this.validateSchema(key, user[key].value);
+            valid = valid && prop[key].errors.length === 0;
+            _user[key] = {...prop[key]};
+        });
+        return {valid, user: _user};
     }
 
     handleSubmit(e) {
         e.preventDefault();
         this.setState({...this.state,isLoading:true});
         const { user } = this.state;
+
+        const {valid, user: vaidatedUser} = this.validateForm(user);
+        
+        if(!valid){
+            this.setState({ user: vaidatedUser });
+            return;
+        }
 
         const payload = {
             name: user.name.value,
