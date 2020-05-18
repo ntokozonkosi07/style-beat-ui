@@ -18,7 +18,6 @@ const ProtectedRoute = ({ component: Component, authToken, ...rest }) => {
             }
           } />;
           if (authToken) {
-            debugger;
             const decodedToken = jwt.decode(authToken, { complete: true });
             
             const dateNow = new Date().getTime() / 1000;
